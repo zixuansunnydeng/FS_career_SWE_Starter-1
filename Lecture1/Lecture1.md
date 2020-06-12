@@ -26,7 +26,7 @@
   - Steps breakdown:
     - Download zip file and extract
     - Open terminal run ``export PATH="$PATH:`pwd`/flutter/bin"`` to update flutter path
-      - `pwd` is the directory where you extract the flutter folder
+      - `pwd` is a command you can use to display the current directory
         - e.g. If you extracted zip under `Desktop`, then it should be `/<some directory>/Desktop`
     - Run `which flutter`
       - You should see the path gets printed out, if not, then there's something wrong you should try exporting the correct path
