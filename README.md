@@ -1,1 +1,1 @@
-# FirstStep Career SWE_Starter Course
+# FirstStep Career SWE Starter Course
