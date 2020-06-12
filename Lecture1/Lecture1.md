@@ -4,6 +4,8 @@
 
 ### **VSCode**
 - Go to https://code.visualstudio.com/ to download Vscode
+- Then open VSCode and click here, you should see extension search bar
+  - <img src="./vscode.png">
 - Install Extensions
   - Dart
   - Flutter
