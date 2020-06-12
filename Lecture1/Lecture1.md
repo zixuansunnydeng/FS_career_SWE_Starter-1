@@ -23,27 +23,28 @@
 - **Mac**: https://flutter.dev/docs/get-started/install/macos
   - Steps breakdown:
     - Download zip file and extract
-    - Open terminal run `export PATH="$PATH:`pwd`/flutter/bin"` to update flutter path
+    - Open terminal run ``export PATH="$PATH:`pwd`/flutter/bin"`` to update flutter path
       - `pwd` is the directory where you extract the flutter folder
         - e.g. If you extracted zip under `Desktop`, then it should be `/<some directory>/Desktop`
     - Run `which flutter`
       - You should see the path gets printed out, if not, then there's something wrong you should try exporting the correct path
+      - <img src="./which_flutter.png">
 - **Windows**: https://flutter.dev/docs/get-started/install/windows
   - Steps Breakdown:
     - Download zip file and extract
     - Update your path following this instruction
       - <img src="./windows.png">
-      - If you are not sure what an environment variables look like, it should look like this
+      - If you are not sure what environment variables look like, it should look like this
         - <img src="./win_env_var.jpg" height=300>
-    - Open CMD and start type `where flutter` or `which flutter` depending on your environment. (Or just see if `flutter` command works)
+    - Open CMD and start type `where flutter` or `which flutter` depending on your Windows version. (Or just see if `flutter` command works)
 
-### Android Studio Simulator
+### **Android Studio Simulator**
 - Install Android Studio 
   - https://developer.android.com/studio
   - Open installer, click through `next` to start installing the packages 
     - For this step just click `do not import settings`
       - <img src="./studio_setting.png">
-- After you successfully installed, you should see this page
+- After you successfully installed, you should see this
   - <img src="./studio.png" height=300>
 - Configure Android Simulator
   - Click `Configue` => `AVD Manager` => `Create virtual device`
