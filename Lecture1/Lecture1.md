@@ -69,31 +69,38 @@
  
 <img src="./starter_app.png" height=300>
 
-## **Dart Programming Language (15 minutes)**
+## **Dart Programming Language**
 From wiki, Dart is an **object-oriented**, **class-based,** **garbage-collected** language with C-style syntax.
 
 ### **Basic usage**
 
 ```dart
 void main() {
-    print('Hello, World!')
+    print('Hello, World!');
 }
 ```
 - What is `main` function?
-  - ___
-  - **Note**:
+  - Entrypoint of the run-time application
+  - **Note**: Not necesarily the first to strt, need to startup some run-time environment/lirbary (c/c++) 
 
 **Variable Definition**
 - Common types: 
-  - ___
-- `var`:
-- `dynamic`:
-- `const`:
-- `final`:
+  - int
+  - double
+  - String
+  - ...
+- `var`: a variable that's anble to change its value
+- `dynamic`: change value and change type
+- `const`: compile-time constant
+- `final`: run-time constant, variable can only be assigned once
   - similar to `Java`'s `final`
   - compile-time vs. run-time?
-- array:
-- **Note:** initial value of every variable is ___ , unlike C/C++
+  - compile-time: compile my codebase to an executable
+  - runtime: running an instance of an executbale
+- array: []
+- **Note:** initial value of every variable is null , unlike C/C++
+  - Stack: garbage value
+  - globale variable/heap: `int` => 0
 
 **Function call**
 ```dart
@@ -115,6 +122,7 @@ void anyNameWithChange(String name, change) {
   print(newName);
 }
 ```
+- Can a fuction be passed in as a parammeter
 
 **If condition**
 ```dart
@@ -162,6 +170,8 @@ print(car.model);
 print(car.maxSeats);
 ```
 - Would `Car car = Car()` work? (default constructor)
+  - default constructor: constructo that has no arguments
+  - Dart: removes default constructor when custom constructor is defined
 
 **Member method**
 ```dart
@@ -170,12 +180,14 @@ class Car {
   String make;
   String model;
   int maxSeats;
+  bool ac;
 
   Car(identifier, make, model, maxSeats) {
     this.identifier = identifier;
     this.make = make;
     this.model = model;
     this.maxSeats = maxSeats;
+    this.ac = ac
   }
 
   String fullModel() {
@@ -191,30 +203,36 @@ print(car.fullModel());
 ```dart
 class SUV extends Car {
   SUV(identifier, make, model, maxSeats): super(identifier, make, model, maxSeats);
+  
   @override 
   String fullModel() {
     return "SUV:" + make + model;
   }
 }
 ```
+- `super`: calls parent's class's construct
+- `override`: overrides parent's class's member method
 
 **Composition (has-a)**
 ```dart
 class SUV {
-  final Car car;
+  Car car;
   SUV(Car car) {
     this.car = car;
   }
-  @override 
+
   String fullModel() {
-    return "SUV:" + make + model;
+    return "SUV:" + car.make + car.model;
   }
 }
 ```
 
 - `Inheritance` vs. `Composition`?
+  - Inheriance: reuseable code
+  - Composition: less dependency, allow better unit testing
+  - In industry, people prefer Composition over Inheriance when given a choice
 
-**Polymorphism**: ___
+**Polymorphism**: same representations can have different meanings
 ```
 SUV suv = SUV('abc', "bmw", "x5", 5);
 Car car = Car('abc', "bmw", "x5", 5);
@@ -222,7 +240,7 @@ print(car.fullModel());
 print(suv.fullModel());
 ```
 
-**Abstract Class/Interface**: ___
+**Abstract Class/Interface**: class that canno't be instantiated but can be inherited
 ```dart
 abstract class Vehicle {
   String identifier;
@@ -247,139 +265,3 @@ class Car extends Vehicle {
   }
 }
 ```
-
-___
-
-## **UI Component (30 minutes)**
-
-### **Beginner project**
-
-The starter project is essentially an app that you can increment the number on the center.
-
-<img src="./starter_app.png" height=300>
-
-```dart
-import 'package:flutter/material.dart';
-```
-`Material.dart` is the library for Material Design
-- Defines the major UI regions, components
-  - Same default designs as Android
-- `cupertino.dart` if you are interested in native iOS component (show more later)
-
-
-### **Widgets**
-
-```dart
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-```
-- `StatelessWidget`: ___
-  - All variables should be marked as ___
-    - why?
-  - **Note:**: you can still mutate variables, but there will be warning that you should change it to stateful widget
-- `build` is where the code executes and build the input.
-  - `BuildContext` contains context info regarding to this build (see more in the future)
-- `MaterialApp`: Material design of the app
-  - `CupertinoApp` + `CupertinoNavigationBar` to create iOS like style
-- **Note**: notice there's explicit parameter when initialize a widget, unlike function or objects
----
-```dart
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-```
-- `StatefulWidget`: ___
-  - Uses method `setState` to modify the variable (try without `setState`)
-    ```dart
-    int _counter = 0;
-
-    void _incrementCounter() {
-      setState(() {
-        _counter++;
-      });
-    }
-    ```
-- `final` keyword: ___
-  - `final` vs `const`
-- Why does the function begin with `_`?
-
-```dart
-return Scaffold(
-  appBar: AppBar(
-    title: Text(widget.title),
-  ),
-  body: Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'You have pushed the button this many times:',
-        ),
-        Text(
-          '$_counter',
-          style: Theme.of(context).textTheme.headline4,
-        ),
-      ],
-    ),
-  ),
-```
-- `AppBar`: the bar on top
-  - Also called `NavigationBar` in iOS terms
-  - `Text`: shows the text
-- `Center`:
-- `Column`:
-  - `mainAxisAlignment`:
-    - `MainAxisAlignment.center`
-    - `MainAxisAlignment.start`
-    - `MainAxisAlignment.end`
-  - `Row`:
-  - `Stack`:
-- `Theme.of(context)`: get information defined within the context
-
-```dart
-floatingActionButton: FloatingActionButton(
-  onPressed: _incrementCounter,
-  tooltip: 'Increment',
-  child: Icon(Icons.add),
-), 
-```
-- `FloatingActionButton`
-  - `onPressed`:
-  - `tooltip`: description if you do a long press
-  - `child`:
-
----
-
-### **Hot reload**
-
-There are two ways to hot reload
-- Save the file (command/ctrl + s)
-  - It is also recommended to enable auto save in VSCode
-    - Settings => 'Auto Save' => 'After delay'
-- Click the yellow bolt button
-
-Restart
-- Click the green circular arrow
-
----
-
-## **Task for you** (30 minutes)
-
-1. Create a private function `_decrement()` that decrements the value by 1, and modify the floatingActionButton to do crement instead with icon `-` (I'll go over this)
-2. Recreate the `+` button on bottom left
-   1. **hint**: Try with `Stack` and `Align` (do some google search on this)
-   2. Put `Stack` of widgets inside `floatingActionButton`
-3. Pop up an `Alert` whenever the number hits 0 or hits 10, tells the user it cannot decrement after 0, nor cannot increment after reaches 10.
-4. Try with other Button UI and take a look at the difference
-     - `MaterialButton`
-       - No default background, rectangular background
-     - `IconButton`
-       - circular default shape, no default background 
-     - `FlatButton`
-       - Similar to MaterialButton
-     - `RaisedButton`
-       - Materistic shape, with shadow
