@@ -65,6 +65,9 @@
   - Do `cd starter_app`
   - Do `flutter run`
     - Wait for a bit for it to run
+    - **Note**: if you encounter any error, try `flutter doctor` to see what the issue is, you might need to
+      - fix android license
+      - reinstall Android SDK tool
 - You should be able to see the starter app to show up like this
  
 <img src="./starter_app.png" height=300>
@@ -81,7 +84,7 @@ void main() {
 ```
 - What is `main` function?
   - Entrypoint of the run-time application
-  - **Note**: Not necesarily the first to strt, need to startup some run-time environment/lirbary (c/c++) 
+  - **Note**: Not necesarily the first to start, need to startup some run-time environment/lirbary (c/c++) 
 
 **Variable Definition**
 - Common types: 
@@ -122,7 +125,7 @@ void anyNameWithChange(String name, change) {
   print(newName);
 }
 ```
-- Can a fuction be passed in as a parammeter
+- A function can be passed in as a parameter
 
 **If condition**
 ```dart
@@ -170,8 +173,9 @@ print(car.model);
 print(car.maxSeats);
 ```
 - Would `Car car = Car()` work? (default constructor)
-  - default constructor: constructo that has no arguments
+  - default constructor: constructor that has no arguments
   - Dart: removes default constructor when custom constructor is defined
+  - (c++: default constructor is always ok to use, unless placed under private)
 
 **Member method**
 ```dart
@@ -180,14 +184,12 @@ class Car {
   String make;
   String model;
   int maxSeats;
-  bool ac;
 
   Car(identifier, make, model, maxSeats) {
     this.identifier = identifier;
     this.make = make;
     this.model = model;
     this.maxSeats = maxSeats;
-    this.ac = ac
   }
 
   String fullModel() {
