@@ -16,12 +16,11 @@ import 'package:flutter/material.dart';
   - https://material.io/components
   - Same default designs as Android
 - `cupertino.dart` if you are interested in native iOS component
-  - https://flutter.dev/docs/development/ui/widgets/cupertino
 
 
 ### **Widgets**: UI components
 
-- `Widget`:
+- `Widget`: define what the UI looks like
 - `Widget Tree`: Think about the entire UI as a tree structure, where each node is a widget
 
 ```dart
@@ -29,33 +28,37 @@ void main() {
   runApp(MyApp());
 }
 ```
-- `runApp` ___ with `MyApp` being __
+- `runApp`: start the app with `MyApp` being the root of the widget tree
 
 ```dart
 class MyApp extends StatelessWidget {
+  final int a;
+  MyApp(int aa) {
+    this.a = aa;
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
 ```
-- `StatelessWidget`: ___
-  - `state`: ___ (e.g. value of its member variables)
+- `StatelessWidget`: does not require mutable states
+  - `state`: logic or internal of the app (e.g. value of its member variables)
   - All variables should in theory be marked as `final`
-    - why?
-- `build`: ___
-  - Called when the ___ the widget is built or when the widget is __
+    - why? because `final` enforces variables to be only assigned once, so it follows the definition of `stateless Widget`
+- `build`: return the UI representations of this widget
+  - Called when the widget is firstly built or when the widget is reloaded
   - `BuildContext` contains context info regarding to a widget location
 - `MaterialApp`: Material design of the app
   - `CupertinoApp` to create iOS like style
-- `MaterialApp` is the ___ of `MyApp`
+- `MaterialApp` is the child of `MyApp`
 ---
 ```dart
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
 ```
-- `StatefulWidget`: ___
+- `StatefulWidget`: can have mutable state
   - Uses method `setState` to modify state changes (try without `setState`)
     ```dart
     int _counter = 0;
@@ -66,10 +69,12 @@ class MyHomePage extends StatefulWidget {
       });
     }
     ```
-- Why does the function begin with `_`? ___
+- Why does the function begin with `_`? `private variable`, `private method`
   - In flutter, there's no `private`, `protected` keywords
-  - `private` is handles in ___
+  - `private` is handles in library-level
     - example
+  - Why do we have private functions/class
+    - `Encapsulation`: data hiding, restrict access
 
 ```dart
 return Scaffold(
@@ -94,15 +99,20 @@ return Scaffold(
 - `AppBar`: the bar on top
   - Also called `NavigationBar` in iOS terms
   - `Text`: text widget
-- `Center`: ___
-- `Column`: ___
+- `Center`: center child widget
+- `Column`: display child widgets vertically
   - `mainAxisAlignment`: alignment on the main axis
+    - in programming/graphics/computer vision: y=0 is at the top
+    - main axis => y
     - `MainAxisAlignment.center`
     - `MainAxisAlignment.start`
     - `MainAxisAlignment.end`
+  - `CrossAxisAlignment`: alignment on the cross axis
+    - cross axis => x
   - What happens if I do `CrossAxisAlignment.start`?
-  - `Row`: ___
-  - `Stack`:  ___
+    - the children with smaller width got shifted to the left hand side
+  - `Row`: horizontal display
+  - `Stack`: stack UI together
 - `Theme.of(context)`: get theme information defined within the context
 
 ```dart
@@ -120,21 +130,22 @@ floatingActionButton: FloatingActionButton(
 `Widget Tree`
 ```
 MyApp
-- MaterialApp
+- MaterialApp (theme)
   - MyHomePage
     - Scaffold
       - AppBar
       - Center
         - Column
           - Text
-          - Text
+          - Text (theme.of(context))
         - FloatingActionButton
           - Icon
+  - Another page (theme.of(context))
 ```
 
 ---
 
-### **Hot reload**
+### **Hot reload/restart**
 
 There are two ways to hot reload
 - Save the file (command/ctrl + s)
@@ -160,16 +171,3 @@ Restart
      - `IconButton`
      - `FlatButton`
      - `RaisedButton`
----
-
-## Git/Github
-
-### **Most Used Commands**
-- `git init`:
-- `git clone`:
-- `git commit -m "MESSAGE"`:
-- `git remote add origin URL`: 
-- `git push origin <BRANCH>`:
-- `git checkout -b <BRANCH>`:
-- `git log`:
-- https://help.github.com/en/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line
