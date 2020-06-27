@@ -17,67 +17,81 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(
-                  'Good morning, Annie',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: RaisedButton(
-                    color: Colors.white,
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 5),
-                ButtonTheme(
-                  minWidth: 20,
-                  child: FlatButton(
-                      child: Image.asset('assets/filter.png'),
-                      onPressed: () {}),
-                ),
-              ],
-            ),
-            Container(
-              height: 80,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CategoryButton(
-                        categoryName: categories[index],
-                        categoryImg: categoryImgs[index]);
-                  }),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Popular Near You',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(height: 5),
-            Container(
-              height: 200,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            children: <Widget>[
+              Row(
                 children: <Widget>[
-                  ResCard(res: res),
-                  SizedBox(width: 10),
-                  ResCard(res: res),
+                  Text(
+                    'Good morning, Annie',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(child: SizedBox()),
+                  CircleAvatar(
+                    child: Image.asset('assets/Profile.png'),
+                    backgroundColor: Colors.white,
+                  ),
                 ],
               ),
-            )
-          ],
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RaisedButton(
+                      color: Colors.white,
+                      onPressed: () {},
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.search),
+                          Text('What would you like to eat?'),
+                        ],
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  ButtonTheme(
+                    minWidth: 20,
+                    child: FlatButton(
+                        child: Image.asset('assets/filter.png'),
+                        onPressed: () {}),
+                  ),
+                ],
+              ),
+              Container(
+                height: 80,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CategoryButton(
+                          categoryName: categories[index],
+                          categoryImg: categoryImgs[index]);
+                    }),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Popular Near You',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 5),
+              Container(
+                height: 200,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    ResCard(res: res),
+                    SizedBox(width: 10),
+                    ResCard(res: res),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -95,10 +109,14 @@ class CategoryButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          RaisedButton(
-            child: Image.asset('assets/$categoryImg'),
-            onPressed: () {},
-            color: Colors.white,
+          ButtonTheme(
+            minWidth: 45,
+            height: 45,
+            child: RaisedButton(
+              child: Image.asset('assets/$categoryImg'),
+              onPressed: () {},
+              color: Colors.white,
+            ),
           ),
           SizedBox(height: 2),
           Text(categoryName, style: TextStyle(fontSize: 10)),
