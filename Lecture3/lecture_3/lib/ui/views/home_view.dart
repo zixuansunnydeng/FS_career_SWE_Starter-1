@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:lecture_3/core/model/restaurant.dart';
+import 'package:lecture_3/ui/views/subviews/res_card.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   static List<String> categories = ['American', 'French', 'Dessert', 'Bar'];
   static List<String> categoryImgs = [
     'Burger.png',
@@ -10,11 +15,43 @@ class HomeView extends StatelessWidget {
     'Dessert.png',
     'Cocktails.png'
   ];
-  static Restaurant res = Restaurant("Steve's Smoke House", '\$\$', 'Steak',
-      'American', 4.5, 'assets/res1.png');
+  static List<Restaurant> resList = [];
+
+  @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+
+  @override
+  void initState() {
+    super.initState();
+    // load restaurant.json when start up
+    loadRestaurant().whenComplete(() {
+      setState(() {});
+    });
+  }
+
+  Future<void> loadRestaurant() async {
+    String output = await DefaultAssetBundle.of(context).loadString("assets/restaurant.json");
+    // json deserialization
+    for (var jsonRes in json.decode(output)) {
+      print('load');
+      var res = Restaurant(jsonRes['resName'], jsonRes['priceRange'], jsonRes['cuisineType1'], jsonRes['cuisineType2'], jsonRes['Rating'],
+        jsonRes['resImage']);
+      HomeView.resList.add(res);
+    }
+
+    // Use yelp api, make a GET request on /business/seaerch
+    var endpoint = 'https://api.yelp.com/v3/businesses/search?term=Starbucks';
+    var apiKey = 'hzaOAgO2PdMwrhhHpDkAV5OaI-OcSfxci56eLfJ_8NB9u-fVqu8TSRgod-J51yqIdXrfEIbqQGzBouc_y_z_71BHnLweMBEDGIiAUZ7UrXa4sZsk145FB0U0t-oAWXYx';
+    Response response = await get(endpoint, headers: {'Authorization': 'Bearer $apiKey'});
+    print(response.statusCode);
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('build');
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -64,11 +101,11 @@ class HomeView extends StatelessWidget {
                 height: 80,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
+                    itemCount: HomeView.categories.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CategoryButton(
-                          categoryName: categories[index],
-                          categoryImg: categoryImgs[index]);
+                          categoryName: HomeView.categories[index],
+                          categoryImg: HomeView.categoryImgs[index]);
                     }),
               ),
               Align(
@@ -81,14 +118,12 @@ class HomeView extends StatelessWidget {
               SizedBox(height: 5),
               Container(
                 height: 200,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    ResCard(res: res),
-                    SizedBox(width: 10),
-                    ResCard(res: res),
-                  ],
-                ),
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: HomeView.resList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ResCard(res: HomeView.resList[index]);
+                    }),
               )
             ],
           ),
@@ -121,59 +156,6 @@ class CategoryButton extends StatelessWidget {
           SizedBox(height: 2),
           Text(categoryName, style: TextStyle(fontSize: 10)),
         ],
-      ),
-    );
-  }
-}
-
-class ResCard extends StatelessWidget {
-  final Restaurant res;
-  ResCard({@required this.res});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Image.asset(res.resImage),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 4, 0, 0),
-              child: Text(
-                res.resName,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 4, 0, 0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                      '${res.priceRange} • ${res.cuisineType1} • ${res.cuisineType2}'),
-                  Expanded(child: SizedBox()),
-                  Text('1.9 km'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 4, 0, 0),
-              child: Row(
-                children: <Widget>[
-                  Image.asset('assets/google_logo.jpg', height: 20, width: 20),
-                  SizedBox(width: 2),
-                  Text('4.5'),
-                  SizedBox(width: 2),
-                  Icon(Icons.star, size: 20),
-                  Icon(Icons.star, size: 20),
-                  Icon(Icons.star, size: 20),
-                  Icon(Icons.star, size: 20),
-                  Icon(Icons.star_half, size: 20),
-                ],
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

@@ -1,0 +1,18 @@
+[
+    {
+        "resName": "Steve's Smoke House",
+        "priceRange": "$$",
+        "cuisineType1": "Steak",
+        "cuisineType2": "American",
+        "Rating": 4.5,
+        "resImage": "assets/res1.png"
+    },
+    {
+        "resName": "Steve",
+        "priceRange": "$$",
+        "cuisineType1": "Steak",
+        "cuisineType2": "American",
+        "Rating": 4.5,
+        "resImage": "assets/res1.png"
+    }
+]
