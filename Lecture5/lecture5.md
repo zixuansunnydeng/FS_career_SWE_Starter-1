@@ -80,12 +80,7 @@
 1. Create an account in yelp
 2. Use yelp api to load 5 restaurants info in each of `American`, `Steak`, `Chinese`, `Korean`, `Japanese`
 3. Deserialize all restaurants as `Restaurant` Objects
-4. Create a singleton class named `Api` in `api.py`, and keep it as a singleton 
-   - `Singleton`: is only initialized once and only has one instance in the entire application
-     - why?
-       - Reduces number of unnecessary objects
-       - keeps the logic consistent
-5. Move api code to `Api` class, and use it
+4. Move api code to `Api` class, and use it
 
 
 

@@ -18,22 +18,28 @@
 8. Create a list of Restaurant, and create a listview from that list of restaurant
 
 ## **Git/Github**
+- version control
 
 ### **Create a Github account**
 
 ### **Most Used Commands**
-- `git init`:
-- `git clone`:
-- `git commit -m "MESSAGE"`:
+- `git init`: make a folder as a git repository
+- `git status`: output current status of your git reposity
+  - is it up to date
+  - any modified files
+- `git add`: add any mofied/untrackd file
+- `git clone`: clone a repository to local
+- `git commit -m "MESSAGE"`: make changes to repository
 - `git push origin <BRANCH>`:
 - `git checkout -b <BRANCH>`:
-- `git log`:
+- `git log`: view your history commits
 - https://help.github.com/en/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line
 
-### **Pull Request**
+### **Pull Request (PR)**
 - Allow others to view the changes you are going to make to the code base
-- `git checkout -b <NEW BRANCH>`
-- `git add -A`
+- `git checkout -b <NEW BRANCH>`: create a new branch
+- `git add -A`: add modified fiels to the new branch
+  - `-A`: add all changed files
 - `git commit -m 'message'`
 - `git push origin <NEW BRANCH>`
   - You may need to setup `personal access token` first
@@ -75,24 +81,33 @@
       "number": "646 555-4567"
     }
   ],
+
   "children": [],
   "spouse": null
 }
 ```
 - why `json`?
+  - commonly used with http request
   - `http`: application protocol used between web clients and web servers
-    - `protocol`: __
+    - client: e.g. web frontend, mobile frontend
+    - `protocol`: set of rules when doing communication
   - part of `tcp/ip` family
     - `http` sits on `application layer` of `tcp/ip`
   - `json` is the most common serialized type
 - `json` vs `xml`?
-- `deserialization`: __
-- `serialization`: __
+  - `xml`: internet object
+  - `json` is more human readble
+- `deserialization`: convert json type into a specific language type
+- `serialization`: convert specific language type into a common type
 
 ### **Demo `Restaurant.json`**
-- `Future`: __
-- `async`: __
-- `await`: __
+- `Future`: object from asynchronous operations
+  - why asynchronous: to allow parallel executions
+  - so that the app can be faster
+- `async`: keyword to specify a functio being asychrnoous
+  - `initState` cannot be asychronous
+- `await`: wait for an asychronous function to finish
+- `whenComplete`: a callback function, so that we can do something when async function is complete
 
 ### **Short task for you**
 1. Create a json file named `categories.json`
