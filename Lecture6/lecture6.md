@@ -8,25 +8,29 @@
 ## **Set up backend API with Python and Flask**
 
 ### Client-server model
-- `Client`: 
-- `server`: 
+- `Client`: web front-end, mobile frontend. Sends request to server
+- `server`: server receves requests from client and sends back response
 - many clients can request info from the server at the same time
 - Pros:
+  - separate the logic from client and server
 - Cons:
+  - server can become overloaded
 <img src="./client_server.png" height=250>
 
 
 ### **Python**
 - Python is probably the most common language right now
 - `Dynamically typed` and `garbage-collected`
-  - `Dynamically typed`:
-  - `garbage-collected`:
+  - `Dynamically typed`: type is not required when programming, it can determine the type on run-time
+  - `garbage-collected`: handles memory deallocation by itself
+    - compare to `C` `C++`, you no longer need to write `free` keyword by yourself
+    - automatically frees variable/object that have no reference count
 - Install `Python3` from https://www.python.org/downloads/
   - You might need to setup PATH in order to run
 
 ### Virtual Environment
-- `Virtual Environment`: 
-  - Why?
+- `Virtual Environment`: creates a development environment thats independent of your system's libraries
+  - Why? 
   - For example, if you have another app running on different versions, encounters problem
 - `venv`
     ```
@@ -38,7 +42,7 @@
 - Python3 has built-in `venv`, but Python2 doesn't
 
 ### **Flask**
-- Flaks is a `micro web framework` written in python
+- Flask is a `micro web framework` written in python
   - `micro`: does not require particular tools or libraries
 - `WSGI application`: client side WSGI interface for WSGI server to connect
   - `WSGI - Web Server Gateway Interface`: standard way to run Python applications
@@ -71,12 +75,13 @@ Windows
 set FLASK_APP=app.py
 ```
 - Now open browser and open `http://127.0.0.1:5000/`, you should see hello world
+  - development server
 
 **Breakdown**
 - `app=Flask(__name__)`
 - `@app.route('/`)
   - `@` is the `decorator` syntax in python
-    - `decorator`: 
+    - `decorator`: decorate a function to another function
     - `hello_world()` is decorated to `app.route('/')`
   - It means that whenever the client reaches `{root_endpoint}/`, `hello_world()` is called and returned to the client
 
@@ -94,11 +99,12 @@ def getRes():
     return ['Steven', 'Good Restaurant']
 ```
 - But this won't work. Why?
-  - ___
-- Can we use json? Why? __
+  - because we are returning a list, which is not a valid return type
+- Can we use json? Why? 
+  - json can be converted into a string when passing into the network
+- `json serialization`
 - `from flask import jsonify`
-- Now copy content from `resturant.json` to this API
 
 ### **Task for you**
-1. Modify the endpoint in app to call this flask API instead of yelp api
+1. Now copy content from `resturant.json` to this API
 
