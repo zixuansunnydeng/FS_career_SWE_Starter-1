@@ -48,6 +48,10 @@
   - `WSGI - Web Server Gateway Interface`: standard way to run Python applications
   - `WSGI Server` (more later)
 - https://flask.palletsprojects.com/en/1.1.x/installation/
+- Activate virtual environment by
+  - Mac: `source venv/bin/activate'
+  - Windows: `venv/Script/activate'
+    - Note: don't do it inside git cmd, use default cmd
 - After activate virtual env, install flask by `pip install flask`
 
 ### **Quick Start**
