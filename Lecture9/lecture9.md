@@ -3,8 +3,8 @@
 ### Vim Tutorial
 My most used commands
 - arrow vs `hjkl` as `up, down, up, right`
-- use `esc` to go to insert mode, click any known keyword to go to type mode
-    - e.g. `a`, `s`
+- use `esc` to go to command mode, click any non-keyword to go to insert mode
+    - e.g. `a`
 - go to the end of the line: `$`
 - go to the start of the line: `0`
 - go to the next word: `w`
@@ -15,12 +15,14 @@ My most used commands
 - go to particular line: `:{num}`
 - go to beginning of the file: `gg`
 - go to end of the file: `shirt+g`
+- undo: `u`
+- redo: `shift + r`
 - search and replace 
    - line 5 to line 12, replace a to b: `:5,12s/a/b/g`
     - search all: `%`
 - combinations
   - delete 3 lines above? `d3k`
-  - move to next 2 words? `w2`
+  - move to next 2 words? `2w`
   - go to the next 3 lines? `3j`
 
 ##Now follow me carefully
@@ -50,7 +52,7 @@ My most used commands
     - What is `sudo`?
 3. Create new folder
 4. Create your virtual environment
-5. Install libraries
+5. Install libraries (flask, flask-cors, requests)
 6. Copy paste your flask file to here
 7. Start your flask app
    1. `export FLASK_ENV=development`
