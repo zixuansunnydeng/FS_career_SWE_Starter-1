@@ -24,6 +24,8 @@ My most used commands
   - delete 3 lines above? `d3k`
   - move to next 2 words? `2w`
   - go to the next 3 lines? `3j`
+- write save: `:wq`
+- not save `:q!`
 
 ##Now follow me carefully
 
