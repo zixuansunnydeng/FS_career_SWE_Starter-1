@@ -22,7 +22,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   @override
   void initState() {
     super.initState();
@@ -33,20 +32,15 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<void> loadRestaurant() async {
-    String output = await DefaultAssetBundle.of(context).loadString("assets/restaurant.json");
-    // json deserialization
-    for (var jsonRes in json.decode(output)) {
-      print('load');
-      var res = Restaurant(jsonRes['resName'], jsonRes['priceRange'], jsonRes['cuisineType1'], jsonRes['cuisineType2'], jsonRes['Rating'],
-        jsonRes['resImage']);
+    // Use your own server api, make a GET request on /getRes
+    var endpoint = 'http://34.229.189.142/getRes';
+    Response response = await get(endpoint);
+    for (var jsonRes in json.decode(response.body)) {
+      print(jsonRes);
+      var res = Restaurant(jsonRes['name'], jsonRes['price'], jsonRes['categories'][0]['alias'],
+          jsonRes['categories'][0]['title'], jsonRes['rating'], jsonRes['image_url']);
       HomeView.resList.add(res);
     }
-
-    // Use yelp api, make a GET request on /business/seaerch
-    var endpoint = 'https://api.yelp.com/v3/businesses/search?term=Starbucks';
-    var apiKey = 'hzaOAgO2PdMwrhhHpDkAV5OaI-OcSfxci56eLfJ_8NB9u-fVqu8TSRgod-J51yqIdXrfEIbqQGzBouc_y_z_71BHnLweMBEDGIiAUZ7UrXa4sZsk145FB0U0t-oAWXYx';
-    Response response = await get(endpoint, headers: {'Authorization': 'Bearer $apiKey'});
-    print(response.statusCode);
   }
 
   @override

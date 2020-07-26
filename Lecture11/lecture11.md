@@ -48,6 +48,7 @@ class Restaurant(Model):
         region = 'us-east-1'
     
     resName = UnicodeAttribute(hash_key=True)
+    city = UnicodeAttribute()
 ```
 - Save yelp data by
 ```python
@@ -69,6 +70,11 @@ if __name__ == '__main__':
   - Defines the privileges of users
     - Some maybe employees, some maybe DevOps Admins, maybe even customers
 - Create a IAM role
+    1. Click Add User
+    2. Click `progammtic access`
+    3. Create a new group, give `AdministratorAccess`
+    4. Ignore add tag
+    5. Save AccessKey and SecretKey
 - Create folder `~/.aws`, and create file named `credentials`
 ```
 [default]

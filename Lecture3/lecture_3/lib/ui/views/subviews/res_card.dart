@@ -12,7 +12,7 @@ class ResCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Image.asset(res.resImage),
+            Image.network(res.resImage, fit: BoxFit.cover, height: 100, width: 250),
             Padding(
               padding: const EdgeInsets.fromLTRB(4, 4, 0, 0),
               child: Text(
