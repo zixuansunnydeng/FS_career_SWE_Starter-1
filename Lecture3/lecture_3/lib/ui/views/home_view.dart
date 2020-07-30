@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:lecture_3/core/model/restaurant.dart';
 import 'package:lecture_3/ui/views/subviews/res_card.dart';
@@ -33,12 +32,16 @@ class _HomeViewState extends State<HomeView> {
 
   Future<void> loadRestaurant() async {
     // Use your own server api, make a GET request on /getRes
-    var endpoint = 'http://34.229.189.142/getRes';
+    var endpoint = 'http://34.207.212.147/getRes';
     Response response = await get(endpoint);
     for (var jsonRes in json.decode(response.body)) {
-      print(jsonRes);
-      var res = Restaurant(jsonRes['name'], jsonRes['price'], jsonRes['categories'][0]['alias'],
-          jsonRes['categories'][0]['title'], jsonRes['rating'], jsonRes['image_url']);
+      var res = Restaurant(
+          jsonRes['resName'],
+          jsonRes['city'],
+          jsonRes['category1'],
+          jsonRes['category2'],
+          jsonRes['rating'],
+          jsonRes['image_url']);
       HomeView.resList.add(res);
     }
   }
