@@ -13,21 +13,32 @@ CORS(app)
 def hello_world():
     return "Hello, World"
 
-@app.route("/getDynamodb")
-def getDBdata():
-    res_data = [vars(res) for res in Restaurant.scan()]
-    return jsonify(res_data)
-
 @app.route("/getRes", methods=["GET"])
 def getRes():
+    output = []
+    for res in Restaurant.scan():
+        res_data = vars(res)['attribute_values']
+        if 'priceRange' not in res_data:
+            continue
+        output.append(res_data)
+    return jsonify(output)
+
+@app.route("/loadYelpToDB", methods=["GET"])
+def loadYelpToDB():
     output = yelp_data().json()['businesses']
     for res in output:
+        if 'price' not in res:
+            continue
         resDB_data = Restaurant(
             resName=res['name'],
             city=res['location']['city'],
+            category1=res['categories'][0]['alias'],
+            category2=res['categories'][0]['title'],
+            rating=res['rating'],
+            image_url=res['image_url'],
+            priceRange=res['price']
         )
         resDB_data.save()
-    return jsonify(output)
 
 def yelp_data():
     endpoint = "https://api.yelp.com/v3/businesses/search"
