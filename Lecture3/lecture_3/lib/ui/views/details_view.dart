@@ -56,7 +56,7 @@ class DetailsView extends StatelessWidget {
                 SizedBox(width: 2),
                 Text('${res.rating}'),
                 SizedBox(width: 2),
-                // TODO: look into rating bar indicator to make it dynamic
+                // TODO: (bonus) look into rating bar indicator to make it dynamic
                 // https://pub.dev/packages/flutter_rating_bar
                 Icon(Icons.star, size: 20),
                 Icon(Icons.star, size: 20),
@@ -131,8 +131,7 @@ class DetailsView extends StatelessWidget {
               onPressed: () {},
               child:
                   Text('Boot the table', style: TextStyle(color: Colors.white)),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
+              // TODO: Add rounded border to the button
               color: Colors.red,
             ),
           )
