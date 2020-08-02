@@ -25,15 +25,16 @@ image_url
 
 ## AWS EC2
 - Virtual server with different configurations
-  - `Instance type`: a1.medium, t3.micro
+  - `image`: Operating Systems
+  - `Instance type`: a1.medium, t3.micro, ...
 <img src="./aws.jpg" height=400 width=600>
   - Different instance has different processors, different storage and number of cores, or even GPUs
-  - What are cores/CPUs useful for? Parallel processing
-- `QPS`: query per second
-  - Means the number of queries a server can handle in one second
+  - What are cores/CPUs useful for? Parallel Processing
+- `QPS`: Queries per Second
+  - How many query request the server can handle in one second
   - Important when deciding how many servers you need for your application
-- `Latency`: or lag, meaning the time it takes for an action/query to take effect
-  - `QPS` = 60 / `latency`
+- `Latency`: or lag, meaning how long does it take for a query to process/take effect
+  - `QPS` = 60 / `latency` / `num of cores`
 
 
 ## Security Group
@@ -45,17 +46,18 @@ image_url
   - `49151 - 64999`: 
 - `TCP vs. UDP`:
   - Both are network protocols
-    - What does `protocol` mean? Meaning in order to establish connections the request must follow the rules specified
-    - TCP is more reliable because of **handshake** property
+    - What does `protocol` mean? Some specified rules must be satisfied
+    - `TCP` is more reliable because of **handshake** property
 <img src="./tcp.png" height=200 width=600>
-      - `handshake`: the recipient must ackowledge in order to proceed
+      - `handshake`: client and server must acknowledge each other before being established
       - No miss packets, but rely on good resources to reduce lag
-    - UDP is simpler and faster, because doesn't need handshake
+      - `TCP/IP`: use TCP and IP protocols to establish `Internet Protocol Suite`, `http` is built on top of `TCP/IP`
+    - `UDP` is simpler and faster, because doesn't need handshake
 <img src="./udp.png" height=200 width=600>
       - more unreliable, can miss packets
   - Examples:
-    - Sending email: TCP
-    - Video Streaming: UDP
+    - Sending email: `TCP`
+    - Video Streaming: `UDP`
 
 ## Nginx
 - `Proxy server`: acts as intermediary between client and server
@@ -64,6 +66,7 @@ image_url
     - Application: bypass firewall
   - `Reverse proxy server`: server puts in front of itself that gets resource on behalf of clients from the server
     - Application: load balancing, means balancing the load for each server (more later)
+- Which one is Nginx?
 
 ## Database
 - SQL vs NoSQL
@@ -77,6 +80,7 @@ image_url
       - `consistency （一致性）`: ensure database properly changes state when transaction is committed
       - `isolation （隔离性）`: each transaction operate independently
       - `durability （持久性）`: commit is permanant 
+    - https://blog.csdn.net/dengjili/article/details/82468576
     - Application: Banking, ATM machine
       - E.g. 1. Withdrawing \$30 from your chequeing account. 2. Put $50 to your investment account
   4. SQL database uses SQL query language, NoSQL has no such a thing
