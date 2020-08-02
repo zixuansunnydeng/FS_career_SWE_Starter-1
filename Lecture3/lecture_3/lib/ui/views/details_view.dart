@@ -130,7 +130,7 @@ class DetailsView extends StatelessWidget {
             child: RaisedButton(
               onPressed: () {},
               child:
-                  Text('Boot the table', style: TextStyle(color: Colors.white)),
+                  Text('Book the table', style: TextStyle(color: Colors.white)),
               // TODO: Add rounded border to the button
               color: Colors.red,
             ),
