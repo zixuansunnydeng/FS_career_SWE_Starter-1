@@ -1,6 +1,11 @@
 # **Lecture 1**
 
-## **Install VSCode and Flutter**
+## Table of Contents
+1. VSCode, Flutter, and Android Studio Installation
+2. Starter App Creation
+3. Dart Language Introduction
+
+## **1. Install VSCode, Flutter, and Android Studio**
 
 ### **VSCode**
 - Go to https://code.visualstudio.com/ to download Vscode
@@ -18,7 +23,7 @@
     - GitLens
     - One Dart Pro
     - Vim & Relative Line Numbers (if you are into Vim)
-  
+
 ### **Flutter**
 - You don't have to look at my 'Steps breakdown', simply following the instructions in the links should work.
   - **It is important to practice your ability to install any tool as a Software Engineer!**
@@ -41,9 +46,9 @@
     - Open CMD and start type `where flutter` or `which flutter` depending on your Windows version. (Or just see if `flutter` command works)
 
 ### **Android Studio Simulator**
-- Install Android Studio 
+- Install Android Studio
   - https://developer.android.com/studio
-  - Open installer, click through `next` to start installing the packages 
+  - Open installer, click through `next` to start installing the packages
     - For this step just click `do not import settings`
       - <img src="./studio_setting.png">
 - After you successfully installed, you should see this
@@ -56,11 +61,12 @@
     - You should see this and click play button to start the simulator
       - <img src="./start_simulator.png">
 
-### **Create your starter project**
+## **2. Create your starter project**
 - Open Android simulator
   - Click play button
 - On terminal (MAC) or CMD (Windows)
-  - run `flutter create starter_app`
+  - run `flutter create [your_app_name]`
+    - In this demo, call `flutter create starter_app`
     - You should see <img src="./all_done.png">
   - Do `cd starter_app`
   - Do `flutter run`
@@ -68,47 +74,50 @@
     - **Note**: if you encounter any error, try `flutter doctor` to see what the issue is, you might need to
       - fix android license
       - reinstall Android SDK tool
-- You should be able to see the starter app to show up like this
- 
-<img src="./starter_app.png" height=300>
+- You should be able to see the starter app to show up like this:
 
-## **Dart Programming Language**
-From wiki, Dart is an **object-oriented**, **class-based,** **garbage-collected** language with C-style syntax.
+  <img src="./lecture1_final_app.png" height=300>
 
-### **Basic usage**
+## **3. Dart Programming Language**
+From wiki, "Dart is an **object-oriented**, **class-based,** **garbage-collected** language with C-style syntax".
 
+### **1. Basic usage**
+
+#### `main` function:
 ```dart
 void main() {
-    print('Hello, World!');
+    print('Hello, World!'); // Hello, World!
 }
 ```
-- What is `main` function?
-  - Entrypoint of the run-time application
-  - **Note**: Not necesarily the first to start, need to startup some run-time environment/lirbary (c/c++) 
+  - Entry point of the run-time application
+  - **Note**: Not necessarily the first to start, need to startup some run-time environment/library (c/c++)
 
-**Variable Definition**
-- Common types: 
+
+#### Variable Definition:
+- Common types:
   - int
   - double
   - String
+  - array []
   - ...
-- `var`: a variable that's anble to change its value
+
+- `var`: a variable that's able to change its value
 - `dynamic`: change value and change type
 - `const`: compile-time constant
 - `final`: run-time constant, variable can only be assigned once
   - similar to `Java`'s `final`
   - compile-time vs. run-time?
-  - compile-time: compile my codebase to an executable
-  - runtime: running an instance of an executbale
-- array: []
+    - compile-time: compile my codebase to an executable
+    - runtime: running an instance of an executbale
 - **Note:** initial value of every variable is null , unlike C/C++
   - Stack: garbage value
-  - globale variable/heap: `int` => 0
+  - global variable/heap: `int` => 0
 
-**Function call**
+
+#### Function call
 ```dart
 void myName() {
-  print('Cody');
+  print('Cody'); // Cody
 }
 
 void anyName(String name) {
@@ -144,11 +153,11 @@ a = a ? false : true //ternary operator
 ```dart
 int a = 5;
 for (var i = 0; i < a; i++) {
-  print('Hello $i');
+  print('Hello ${i+ 1}'); // Hello 1 - Hello 5
 }
 ```
 
-### **Object-oriented with Dart**
+### **2. Object-oriented with Dart**
 
 **Class Definition**
 ```dart
@@ -157,7 +166,7 @@ class Car {
   String make;
   String model;
   int maxSeats;
-  
+
   // Constructor
   Car(identifier, make, model, maxSeats) {
     this.identifier = identifier;
@@ -167,10 +176,10 @@ class Car {
   }
 }
 
-Car car = Car("bmw", "x5", 5);
-print(car.make);
-print(car.model);
-print(car.maxSeats);
+Car car = Car("Cody", "bmw", "x5", 5);
+print(car.make); // bmw
+print(car.model); // x5
+print(car.maxSeats); // 5
 ```
 - Would `Car car = Car()` work? (default constructor)
   - default constructor: constructor that has no arguments
@@ -180,35 +189,26 @@ print(car.maxSeats);
 **Member method**
 ```dart
 class Car {
-  String identifier;
-  String make;
-  String model;
-  int maxSeats;
-
-  Car(identifier, make, model, maxSeats) {
-    this.identifier = identifier;
-    this.make = make;
-    this.model = model;
-    this.maxSeats = maxSeats;
-  }
+  // variables
+  // constructor
 
   String fullModel() {
-    return make + model
+    return this.make + ' ' + this.model;
   }
 }
 
 Car car = Car('abc', "bmw", "x5", 5);
-print(car.fullModel());
+print(car.fullModel()); // bmw x5
 ```
 
 **Inheritance (is-a)**
 ```dart
 class SUV extends Car {
   SUV(identifier, make, model, maxSeats): super(identifier, make, model, maxSeats);
-  
-  @override 
+
+  @override
   String fullModel() {
-    return "SUV:" + make + model;
+    return "SUV: " + make + model;
   }
 }
 ```
@@ -217,39 +217,42 @@ class SUV extends Car {
 
 **Composition (has-a)**
 ```dart
-class SUV {
+class SUV2 {
   Car car;
-  SUV(Car car) {
+  SUV2(Car car) { // instantiated with Car class
     this.car = car;
   }
 
   String fullModel() {
-    return "SUV:" + car.make + car.model;
+    return "SUV2: " + car.make + ' ' + car.model;
   }
 }
 ```
 
 - `Inheritance` vs. `Composition`?
-  - Inheriance: reuseable code
+  - Inheritance: reuseable code
   - Composition: less dependency, allow better unit testing
-  - In industry, people prefer Composition over Inheriance when given a choice
+  - In industry, people prefer Composition over Inheritance when given a choice due to large project size
 
 **Polymorphism**: same representations can have different meanings
-```
-SUV suv = SUV('abc', "bmw", "x5", 5);
-Car car = Car('abc', "bmw", "x5", 5);
-print(car.fullModel());
-print(suv.fullModel());
+```dart
+Car car = Car("Cody", "bmw", "x5", 5);
+SUV suv = SUV('abc', "bmw", "a2", 5);
+SUV2 suv2 = SUV2(car);
+
+print(car.fullModel()); // bmw x5
+print(suv.fullModel()); // SUV: bmw a2
+print(suv2.fullModel()); // SUV2: bmw x5
 ```
 
-**Abstract Class/Interface**: class that canno't be instantiated but can be inherited
+**Abstract Class/Interface**: class that cannot be instantiated but can be inherited
 ```dart
 abstract class Vehicle {
   String identifier;
   String make;
   String model;
   int maxSeats;
-  
+
   String fullModel();
 }
 
@@ -261,9 +264,76 @@ class Car extends Vehicle {
     this.model = model;
     this.maxSeats = maxSeats;
   }
-  
+
   String fullModel() {
     return make + model;
   }
 }
+```
+
+Putting all code together:
+```dart
+abstract class Vehicle {
+  String identifier;
+  String make;
+  String model;
+  int maxSeats;
+
+  String fullModel();
+}
+
+
+class Car extends Vehicle {
+//   String identifier;
+//   String make;
+//   String model;
+//   int maxSeats;
+
+  // Constructor
+  Car(identifier, make, model, maxSeats) {
+    this.identifier = identifier;
+    this.make = make;
+    this.model = model;
+    this.maxSeats = maxSeats;
+  }
+  
+  String fullModel() {
+    return this.make + ' ' + this.model;
+  }
+}
+
+class SUV extends Car { // inheritance
+  SUV(identifier, make, model, maxSeats): super(identifier, make, model, maxSeats);
+
+  @override
+  String fullModel() {
+    return "SUV: " + make + ' ' + model;
+  }
+}
+
+class SUV2 { // composition
+  Car car;
+  SUV2(Car car) { // instantiated with Car class
+    this.car = car;
+  }
+
+  String fullModel() {
+    return "SUV2: " + car.make + ' ' + car.model;
+  }
+}
+
+
+void main() {
+
+Car car = Car("Cody", "bmw", "x5", 5);
+SUV suv = SUV('abc', "bmw", "a2", 5);
+SUV2 suv2 = SUV2(car);
+print(car.make); // bmw
+print(car.model); // x5
+print(car.maxSeats); // 5
+print(car.fullModel()); // bmw x5
+print(suv.fullModel()); // SUV: bmw a2
+print(suv2.fullModel()); // SUV2: bmw x5
+}
+
 ```
