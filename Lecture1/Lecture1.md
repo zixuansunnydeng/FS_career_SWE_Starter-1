@@ -10,7 +10,7 @@
 ### **VSCode**
 - Go to https://code.visualstudio.com/ to download Vscode
 - Then open VSCode and click here, you should see extension search bar
-  - <img src="./vscode.png">
+  - <img src="./images/vscode.png">
 - Install Extensions
   - Dart
   - Flutter
@@ -35,14 +35,14 @@
         - e.g. If you extracted zip under `Desktop`, then it should be `/<some directory>/Desktop`
     - Run `which flutter`
       - You should see the path gets printed out, if not, then there's something wrong you should try exporting the correct path
-      - <img src="./which_flutter.png">
+      - <img src="./images/which_flutter.png">
 - **Windows**: https://flutter.dev/docs/get-started/install/windows
   - Steps Breakdown:
     - Download zip file and extract
     - Update your path following this instruction
-      - <img src="./windows.png">
+      - <img src="./images/windows.png">
       - If you are not sure what environment variables look like, it should look like this
-        - <img src="./win_env_var.jpg" height=300>
+        - <img src="./images/win_env_var.jpg" height=300>
     - Open CMD and start type `where flutter` or `which flutter` depending on your Windows version. (Or just see if `flutter` command works)
 
 ### **Android Studio Simulator**
@@ -50,16 +50,16 @@
   - https://developer.android.com/studio
   - Open installer, click through `next` to start installing the packages
     - For this step just click `do not import settings`
-      - <img src="./studio_setting.png">
+      - <img src="./images/studio_setting.png">
 - After you successfully installed, you should see this
-  - <img src="./studio.png" height=300>
+  - <img src="./images/studio.png" height=300>
 - Configure Android Simulator
-  - Click `Configue` => `AVD Manager` => `Create virtual device`
+  - Click `Configure` => `AVD Manager` => `Create virtual device`
     - Click through and install R
-      - <img src="./download_r.png" height=300>
-  - After you are done, click `Configue` => `AVD Manager`
+      - <img src="./images/download_r.png" height=300>
+  - After you are done, click `Configure` => `AVD Manager`
     - You should see this and click play button to start the simulator
-      - <img src="./start_simulator.png">
+      - <img src="./images/start_simulator.png">
 
 ## **2. Create your starter project**
 - Open Android simulator
@@ -67,7 +67,7 @@
 - On terminal (MAC) or CMD (Windows)
   - run `flutter create [your_app_name]`
     - In this demo, call `flutter create starter_app`
-    - You should see <img src="./all_done.png">
+    - You should see <img src="./images/all_done.png">
   - Do `cd starter_app`
   - Do `flutter run`
     - Wait for a bit for it to run
@@ -76,7 +76,7 @@
       - reinstall Android SDK tool
 - You should be able to see the starter app to show up like this:
 
-  <img src="./lecture1_final_app.png" height=300>
+  <img src="./images/lecture1_final_app.png" height=300>
 
 ## **3. Dart Programming Language**
 From wiki, "Dart is an **object-oriented**, **class-based,** **garbage-collected** language with C-style syntax".
@@ -108,7 +108,7 @@ void main() {
   - similar to `Java`'s `final`
   - compile-time vs. run-time?
     - compile-time: compile my codebase to an executable
-    - runtime: running an instance of an executbale
+    - runtime: running an instance of an executable
 - **Note:** initial value of every variable is null , unlike C/C++
   - Stack: garbage value
   - global variable/heap: `int` => 0
@@ -296,7 +296,7 @@ class Car extends Vehicle {
     this.model = model;
     this.maxSeats = maxSeats;
   }
-  
+
   String fullModel() {
     return this.make + ' ' + this.model;
   }
