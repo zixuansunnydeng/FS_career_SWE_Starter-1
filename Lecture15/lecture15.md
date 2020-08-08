@@ -26,11 +26,13 @@ class User(Model): # inheritance
     password = UnicodeAttribute()
     phoneNumber = UnicodeAttribute()
 
-    reservations = ListAttribute()
+    reservations = ListAttribute() # List of resName
 ```
 
+- HTTP POST: another type of http request, should modifies the server database
+
 ```dart
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET"])
 def login():
     email = request.json["email"]
     password = request.json["password"]

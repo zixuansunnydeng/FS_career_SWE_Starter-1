@@ -7,6 +7,7 @@ import 'package:lecture_3/core/model/restaurant.dart';
 import 'package:lecture_3/ui/views/subviews/res_card.dart';
 
 class HomeView extends StatefulWidget {
+  final String useremail;
   static List<String> categories = ['American', 'French', 'Dessert', 'Bar'];
   static List<String> categoryImgs = [
     'Burger.png',
@@ -15,7 +16,7 @@ class HomeView extends StatefulWidget {
     'Cocktails.png'
   ];
   static List<Restaurant> resList = [];
-
+  HomeView({@required this.useremail});
   @override
   _HomeViewState createState() => _HomeViewState();
 }
@@ -120,7 +121,7 @@ class _HomeViewState extends State<HomeView> {
                     scrollDirection: Axis.horizontal,
                     itemCount: HomeView.resList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ResCard(res: HomeView.resList[index]);
+                      return ResCard(res: HomeView.resList[index], useremail: widget.useremail);
                     }),
               )
             ],

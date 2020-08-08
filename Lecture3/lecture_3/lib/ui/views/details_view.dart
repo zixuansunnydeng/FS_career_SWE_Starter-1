@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:lecture_3/core/model/restaurant.dart';
 
 class DetailsView extends StatelessWidget {
+  final String useremail;
   final Restaurant res;
 
-  DetailsView({@required this.res});
+  DetailsView({@required this.res, @required this.useremail});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +121,10 @@ class DetailsView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                print('book');
+                print(useremail);
+              },
               child:
                   Text('Boot the table', style: TextStyle(color: Colors.white)),
               shape: RoundedRectangleBorder(
