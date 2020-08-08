@@ -1,10 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:lecture_3/core/model/restaurant.dart';
 
 class DetailsView extends StatelessWidget {
   final String useremail;
   final Restaurant res;
+
+  Future<String> makeBooking() async {
+    var param = {
+      'email': useremail,
+      'resName': res.resName,
+    };
+    var headers = {'Content-type': 'application/json'};
+    var endpoint = 'http://52.205.82.172/book';
+    var response =
+        await post(endpoint, headers: headers, body: json.encode(param));
+    return json.decode(response.body);
+  }
 
   DetailsView({@required this.res, @required this.useremail});
   @override
@@ -121,7 +136,29 @@ class DetailsView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
-              onPressed: () {
+              onPressed: () async {
+                if (useremail == null) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Not Logged In'),
+                          content: Text('Please log in first in bookings.'),
+                        );
+                      });
+                } else {
+                  var output = await makeBooking();
+                  if (output == 'Success') {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Success'),
+                          content: Text('You booking was successful'),
+                        );
+                      });
+                  }
+                }
                 print('book');
                 print(useremail);
               },
