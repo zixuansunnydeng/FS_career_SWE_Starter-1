@@ -62,4 +62,4 @@ def login():
 @app.route("/book", methods=["POST"])
 def book():
 ```
-2. Update book the table button, so that it alerts 
+2. Update book the table button, so that it alerts successful when the reservation goes through
