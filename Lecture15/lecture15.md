@@ -50,10 +50,7 @@ def login():
 - Adding `bottom_navigation_view.dart`
 - Adding `bookings_view.dart`
 
-
-## 4. 
-
-
+## 4. Pass user data to details view
 
 
 ## Task
