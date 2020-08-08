@@ -1,23 +1,19 @@
 # **Lecture 3**
 
-## **Task from lecture 2**
+## Table of Contents
+1. Unit Testing
+2. Course Project
+3. Homework
 
-1. Create a private function `_decrement()` that decrements the value by 1, and modify the floatingActionButton to do crement instead with icon `-` (I'll go over this)
-2. Recreate the `+` button on bottom left
-   1. **hint**: Try with `Stack` and `Align` (do some google search on this)
-   2. Put `Stack` of widgets inside `floatingActionButton`
-3. Pop up an `Alert` whenever the number hits 0 or hits 10, tells the user it cannot decrement after 0, nor cannot increment after reaches 10.
-   1. **hint**: look up function `showDialog`
-4. Try with other Button UI and take a look at the difference
-     - `MaterialButton`
-     - `IconButton`
-     - `FlatButton`
-     - `RaisedButton`
-
-## Unit Testing
+---
+## **1. Unit Testing**
 - TDD: test-driven development
 - Tests correctness of individual components of a codebase
-`/test/widget_test.dart`
+- Demo test path: `Lecture3/lecture_3/test/widget_test.dart`
+- To start a test, click 'run' button above the code:
+
+ <img src="./images/runTest.png">
+
 ```dart
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -40,26 +36,32 @@ void main() {
 ```
 - `findsOneWidget`: means one widget is found
 - `findsNothing`: no widget is found given the condition
+---
+## **2. Course Project**
 
-**Task**
-- write a unit test for your decrement button
+<img src="./images/app.png">
 
-## **Course Project**
+To save the project's source code locally on your laptop, get SSH key from github repository's home page and run `git clone [repo ssh key]` in git bash terminal
 
-### **Git clone starter template repository**
-- `git clone` entire repo
+<img src="./images/ssh-key.PNG">
 
-### **Go over starter code**
+### **main.dart**
 
-`main.dart`
+Path: `Lecture3/lecture_3/lib/main.dart`
 ```dart
+// line 12
 return MaterialApp(
-  home: HomeView(),
+  home: HomeView(), // go to definition, jump to home_view.dart
 );
 ```
 
-`home_view.dart`
+### **home_view.dart**
+
+Path: `Lecture3/lecture_3/lib/ui/views/home_view.dart`
+
+**1. static**
 ```dart
+// line 10
 static List<String> categories = ['American', 'French', 'Dessert', 'Bar'];
 static List<String> categoryImgs = [
   'Burger.png',
@@ -70,22 +72,44 @@ static List<String> categoryImgs = [
 static Restaurant res = Restaurant("Steve's Smoke House", '\$\$', 'Steak',
     'American', 4.5, 'assets/res1.png');
 ```
-- `static`: class-wide state and constants, not accesible to instances
+- `static`: class-wide state and constants, not accessible to instances
+- it is conventional to use `static` here, because the variables we defined are typically not going to be called on object level
 
 ```dart
-SafeArea(
-    child:
-```
-- `SafeArea`: displays widget outside of SafeArea
+// for example
 
+class Car {
+  static int b = 0;
+
+  // Constructor
+  ...
+}
+
+void main() {
+  Car bmw = Car("Cody", "bmw");
+  print(bmw.make); // bmw
+  print(Car.b); //0
+  // because b is static, it is called on class level
+}
+```
+**2. SafeArea**
+```dart
+return Scaffold( // if you are using an AppBar
+  body: SafeArea(
+    child: ...
+```
+- `SafeArea`: displays widgets below the status bar at the top of the phone screen
+
+**3. TextStyle**
 ```dart
 Text(
     'Good morning, Annie',
     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    // style defined by TextStyle
 ),
 ```
-- `TextStyle`
 
+**4. Row**
 ```dart
 Row(
     children: <Widget>[
@@ -98,7 +122,7 @@ Row(
           ),
         ),
       ),
-      SizedBox(width: 5),
+      SizedBox(width: 5), // add some space in between
       ButtonTheme(
         minWidth: 20,
         child: FlatButton(
@@ -113,8 +137,9 @@ Row(
 - `ButtonTheme`
 - `Image.asset` get image given specified path
 
+**5. Container**
 ```dart
-Container(
+Container( // use it when it has an arbitrary length
   height: 80,
   child: ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -128,8 +153,9 @@ Container(
 ```
 - `ListView.builder`: allow arbitrary length, and scrollable
 - Why wrap around with a `Container`?
-  - Because it's arbitray, inside a Column, need to know the underlying dimension
+  - Because it's arbitrary, inside a Column, need to know the underlying dimension
 
+**6. Align**
 ```dart
 Align(
   alignment: Alignment.centerLeft,
@@ -151,7 +177,7 @@ Container(
   ),
 )
 ```
-
+**7. CategoryButton**
 ```dart
 class CategoryButton extends StatelessWidget {
   final String categoryName;
@@ -179,7 +205,8 @@ class CategoryButton extends StatelessWidget {
 ```
 - what's `@required`
   - Default not required, adding it so that must be passed in
-- Can someone help me walk through this widget?
+
+Can someone help me walk through this widget?
 
 ```dart
 class ResCard extends StatelessWidget {
@@ -227,41 +254,24 @@ class ResCard extends StatelessWidget {
                   Icon(Icons.star_half, size: 20),
                 ],
 ```
+---
+## **3. Tasks for you**
 
+1. Write a unit test for your decrement button
 
-### **Your Turn**
-1. Setup custom font (I'll show you this)
-   1. Add google font to `pubspec.yaml`
-   2. Let it install
-   3. Import `google_font.dart` to `main.dart`
-   4. Set `montserratTextTheme` as the default text theme
-2. Setup asset path in `pubspec.yaml` (I'll show you this)
-   1. under `flutter:` inside `pubspec.yam`
-   2. uncomment `assets:`
-3. Fill out info inside search bar
-4. Create the profile image
-   1. **hint**: google at `CircularAvatar`
-5. Fix the size of category buttons using `buttonTheme`
-6. Fix padding inside resCard
-7. Try create a folder under `ui/`, name as `subview`, and then create a file named `res_card.dart`, then move widget `ResCard` to that file
-8. Create a list of Restaurant, and create a listview from that list of restaurant
-
-## Git/Github
-
-### **Most Used Commands**
-- `git init`:
-- `git clone`:
-- `git commit -m "MESSAGE"`:
-- `git remote add origin URL`: 
-- `git push origin <BRANCH>`:
-- `git checkout -b <BRANCH>`:
-- `git log`:
-- https://help.github.com/en/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line
-
-### **Pull Request**
-- Allow others to view the changes you are going to make to the code base
-- `git checkout -b <NEW BRANCH>`
-- `git add -A`
-- `git commit -m 'message'`
-- `git push origin <NEW BRANCH>`
-  - You may need to setup `personal access token` first
+2. From what we learned in this lecture,
+   1. Setup custom font (I'll show you this)
+      1. Add google font to `pubspec.yaml`
+      2. Let it install
+      3. Import `google_font.dart` to `main.dart`
+      4. Set `montserratTextTheme` as the default text theme
+   2. Setup asset path in `pubspec.yaml` (I'll show you this)
+      1. under `flutter:` inside `pubspec.yam`
+      2. uncomment `assets:`
+   3. Fill out info inside search bar
+   4. Create the profile image
+      1. **hint**: google at `CircularAvatar`
+   5. Fix the size of category buttons using `buttonTheme`
+   6. Fix padding inside resCard
+   7. Try create a folder under `ui/`, name as `subview`, and then create a file named `res_card.dart`, then move widget `ResCard` to that file
+   8. Create a list of Restaurant, and create a listview from that list of restaurant
