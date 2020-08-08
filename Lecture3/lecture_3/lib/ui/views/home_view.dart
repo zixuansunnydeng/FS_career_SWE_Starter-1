@@ -32,7 +32,7 @@ class _HomeViewState extends State<HomeView> {
 
   Future<void> loadRestaurant() async {
     // Use your own server api, make a GET request on /getRes
-    var endpoint = 'http://18.206.202.80//getRes';
+    var endpoint = 'http://52.205.82.172/getRes';
     Response response = await get(endpoint);
     for (var jsonRes in json.decode(response.body)) {
       var res = Restaurant(
@@ -41,7 +41,8 @@ class _HomeViewState extends State<HomeView> {
           jsonRes['category1'],
           jsonRes['category2'],
           jsonRes['rating'],
-          jsonRes['image_url']);
+          jsonRes['image_url'],
+          jsonRes['address']);
       HomeView.resList.add(res);
     }
   }

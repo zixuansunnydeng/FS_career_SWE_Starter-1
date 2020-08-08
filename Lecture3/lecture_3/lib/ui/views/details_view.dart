@@ -10,12 +10,11 @@ class DetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TODO: add background Color to make it transparent
+        backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: ListView(
         children: <Widget>[
-          // TODO: add height and fit to make this image look better
           Image.network(res.resImage, height: 200, fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
@@ -65,7 +64,7 @@ class DetailsView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-            child: Text('90 Eglinton East, Toronto, ABC EFG'),
+            child: Text('${res.address}'),
           ),
           Divider(height: 1),
           Padding(
