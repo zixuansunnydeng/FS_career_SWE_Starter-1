@@ -5,10 +5,11 @@ We want to allow this app to make a booking for a restaurant
 So what do we need?
 1. Need a way to make the booking
 2. It should store the info that there's a booking
-   1. That means we need to store user data
+   1. **That means we need to store user data**
 3. A way to see your bookings
 4. Maybe change or cancel it
 
+## 1. Add User Model
 ```dart
 from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute
@@ -33,12 +34,32 @@ class User(Model): # inheritance
 def login():
     email = request.json["email"]
     password = request.json["password"]
-    result = User.query(email)
-    if len(result) == 0:
+    try:
+        user = User.get(email)
+    except:
         return jsonify("Incorrect email")
+    if user.password == password:
+        return jsonify("Success")
     else:
-        if result.password == password:
-            return jsonify("Success")
-        else:
-            return jsonify("Wrong Password")
+        return jsonify("Wrong Password")
 ```
+
+## 2. Adding a fake user to DB
+
+## 3. Update the UI to allow user to log in
+- Adding `bottom_navigation_view.dart`
+- Adding `bookings_view.dart`
+
+
+## 4. 
+
+
+
+
+## Task
+1. Create an api for reservation
+```dart
+@app.route("/book", methods=["POST"])
+def book():
+```
+2. Update book the table button, so that it alerts 
