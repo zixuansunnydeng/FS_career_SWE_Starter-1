@@ -4,15 +4,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:lecture_3/core/model/restaurant.dart';
+import 'package:provider/provider.dart';
 
-class DetailsView extends StatelessWidget {
+class DetailsView extends StatefulWidget {
   final String useremail;
   final Restaurant res;
 
+  DetailsView({@required this.res, @required this.useremail});
+
+  @override
+  _DetailsViewState createState() => _DetailsViewState();
+}
+
+class _DetailsViewState extends State<DetailsView> {
   Future<String> makeBooking() async {
     var param = {
-      'email': useremail,
-      'resName': res.resName,
+      'email': widget.useremail,
+      'resName': widget.res.resName,
     };
     var headers = {'Content-type': 'application/json'};
     var endpoint = 'http://52.205.82.172/book';
@@ -21,7 +29,6 @@ class DetailsView extends StatelessWidget {
     return json.decode(response.body);
   }
 
-  DetailsView({@required this.res, @required this.useremail});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +38,12 @@ class DetailsView extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          Image.network(res.resImage, height: 200, fit: BoxFit.cover),
+          Image.network(widget.res.resImage, height: 200, fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
             child: Row(
               children: <Widget>[
-                Text(res.resName,
+                Text(widget.res.resName,
                     style:
                         TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 SizedBox(width: 5),
@@ -52,7 +59,7 @@ class DetailsView extends StatelessWidget {
                 ),
                 Expanded(child: SizedBox()),
                 Text(
-                  res.priceRange,
+                  widget.res.priceRange,
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 14,
@@ -68,7 +75,7 @@ class DetailsView extends StatelessWidget {
               children: [
                 Image.asset('assets/google_logo.jpg', height: 20, width: 20),
                 SizedBox(width: 2),
-                Text('${res.rating}'),
+                Text('${widget.res.rating}'),
                 SizedBox(width: 2),
                 Icon(Icons.star, size: 20),
                 Icon(Icons.star, size: 20),
@@ -80,7 +87,7 @@ class DetailsView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-            child: Text('${res.address}'),
+            child: Text('${widget.res.address}'),
           ),
           Divider(height: 1),
           Padding(
@@ -98,7 +105,7 @@ class DetailsView extends StatelessWidget {
                   children: <Widget>[
                     FlatButton(
                         child: Image.network(
-                          res.resImage,
+                          widget.res.resImage,
                         ),
                         onPressed: () {}),
                     Text('Prime Ribs',
@@ -110,7 +117,8 @@ class DetailsView extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     FlatButton(
-                        child: Image.network(res.resImage), onPressed: () {}),
+                        child: Image.network(widget.res.resImage),
+                        onPressed: () {}),
                     Text(
                       'Teriyaki',
                       style: TextStyle(
@@ -122,7 +130,8 @@ class DetailsView extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     FlatButton(
-                        child: Image.network(res.resImage), onPressed: () {}),
+                        child: Image.network(widget.res.resImage),
+                        onPressed: () {}),
                     Text(
                       'Teriyaki',
                       style: TextStyle(
@@ -136,32 +145,39 @@ class DetailsView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
-              onPressed: () async {
-                if (useremail == null) {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Not Logged In'),
-                          content: Text('Please log in first in bookings.'),
-                        );
-                      });
-                } else {
-                  var output = await makeBooking();
-                  if (output == 'Success') {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Success'),
-                          content: Text('You booking was successful'),
-                        );
-                      });
-                  }
-                }
-                print('book');
-                print(useremail);
-              },
+              onPressed: Provider.of<List<String>>(context, listen: false)
+                      .contains(widget.res.resName)
+                  ? null
+                  : () async {
+                      if (widget.useremail == null) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Not Logged In'),
+                                content:
+                                    Text('Please log in first in bookings.'),
+                              );
+                            });
+                      } else {
+                        var output = await makeBooking();
+                        if (output == 'Success') {
+                          setState(() {
+                            Provider.of<List<String>>(context, listen: false)
+                                .add(widget.res.resName);
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Success'),
+                                  content: Text('You booking was successful'),
+                                );
+                              },
+                            );
+                          });
+                        }
+                      }
+                    },
               child:
                   Text('Boot the table', style: TextStyle(color: Colors.white)),
               shape: RoundedRectangleBorder(
