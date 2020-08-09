@@ -39,6 +39,26 @@ def book():
 
 ## Task
 1. Change the type of provider to `User`, so that
-   1. inside `bookings_view`, it should create the user whenever log in is successful
-   2. inside `home_view`, update headline to `Good Morning {user_name}`
-   3. Get rid of `useremail` variable in views and now you can use `Provider.of<User>(context) for every useremail check
+   1. Create a `User` class
+```dart
+class User {
+   String useremail;
+   String name;
+   List<String> reservations;
+}
+```
+   2. Change backend to return all user info
+```python
+{"status": "Success", "user": vars(user)["attribute_values"]}
+```
+   3. In `main.dart`, change provider to be 
+```dart
+Provider.of<User>(
+   create: (_) => null,
+   child: ...
+)
+```
+   4. inside `bookings_view`, it should create the user whenever log in is successful
+   5. inside `home_view`, update headline to `Good Morning {user_name}`
+      1. If user is null, use a placeholder
+   6. Get rid of `useremail` variable in views and now you can use `Provider.of<User>(context, listen:false).useremail` for every useremail check
