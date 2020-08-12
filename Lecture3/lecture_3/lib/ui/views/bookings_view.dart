@@ -2,12 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:lecture_3/core/model/user.dart';
 import 'package:provider/provider.dart';
 
 class BookingsView extends StatefulWidget {
-  final void Function(String) setupUserEmail;
-
-  BookingsView({@required this.setupUserEmail});
   @override
   _BookingsViewState createState() => _BookingsViewState();
 }
@@ -24,7 +22,7 @@ class _BookingsViewState extends State<BookingsView> {
       'password': password,
     };
     var headers = {'Content-type': 'application/json'};
-    var endpoint = 'http://52.205.82.172/login';
+    var endpoint = 'http://52.91.147.61/login';
     var response =
         await post(endpoint, headers: headers, body: json.encode(param));
     return json.decode(response.body);
@@ -65,11 +63,13 @@ class _BookingsViewState extends State<BookingsView> {
                         var output = response['status'];
                         if (output == 'Success') {
                           // do something
-                          for (var resName in response['user_reservations']) {
-                            Provider.of<List<String>>(context, listen: false)
-                                .add(resName);
-                          }
-                          widget.setupUserEmail(emailController.text);
+                          var userData = response['user'];
+                          Provider.of<User>(context, listen: false).useremail =
+                              userData['email'];
+                          Provider.of<User>(context, listen: false).name =
+                              userData['name'];
+                          Provider.of<User>(context, listen: false)
+                              .reservations = List<String>.from(userData['reservations']);
                           setState(() {
                             loggedin = true;
                           });
@@ -110,7 +110,7 @@ class _BookingsViewState extends State<BookingsView> {
 class BookingsColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var bookings = Provider.of<List<String>>(context, listen: false);
+    var bookings = Provider.of<User>(context, listen: false).reservations;
     return ListView.builder(
       itemCount: bookings.length,
       itemBuilder: (BuildContext context, int index) {
