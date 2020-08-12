@@ -1,9 +1,11 @@
 from flask import Flask
 from flask import jsonify
+from flask import request
 from flask_cors import CORS
 import requests
 
 from restaurant import Restaurant
+from user import User
 
 app = Flask(__name__)
 CORS(app)
@@ -36,14 +38,38 @@ def loadYelpToDB():
             category2=res['categories'][0]['title'],
             rating=res['rating'],
             image_url=res['image_url'],
-            priceRange=res['price']
+            priceRange=res['price'],
+            address=res['location']['address1']
         )
         resDB_data.save()
+
+@app.route("/login", methods=["POST"])
+def login():
+    email = request.json["email"]
+    password = request.json["password"]
+    try:
+        user = User.get(email)
+    except:
+        return jsonify({"status": "Incorrect email"})
+    if user.password == password:
+        return jsonify({"status": "Success", "user": vars(user)["attribute_values"]})
+    else:
+        return jsonify({"status":"Wrong Password"})
+
+@app.route("/book", methods=["POST"])
+def book():
+    email = request.json["email"]
+    resName = request.json["resName"]
+    user = User.get(email)
+    res = Restaurant.get(resName)
+    user.reservations.append(resName)
+    user.save()
+    return jsonify("Success")
 
 def yelp_data():
     endpoint = "https://api.yelp.com/v3/businesses/search"
     params = {"term": "chinese", "location": "Toronto", "limit": 10}
-    api_key = "hzaOAgO2PdMwrhhHpDkAV5OaI-OcSfxci56eLfJ_8NB9u-fVqu8TSRgod-J51yqIdXrfEIbqQGzBouc_y_z_71BHnLweMBEDGIiAUZ7UrXa4sZsk145FB0U0t-oAWXYx"
+    api_key = ""
     header = {"Authorization": f"Bearer {api_key}"}
     r = requests.get(endpoint, headers=header, params=params)
     return r
