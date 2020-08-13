@@ -1,14 +1,20 @@
 # **Lecture 2**
 
-## **UI Component**
+## Table of Contents
+1. Flutter Beginner App Breakdown
+2. Homework
 
-### **Beginner project**
+## **Flutter App Breakdown**
+
+In this demo, we will go through starter_app's main.dart file to demonstrate the basic parts of a flutter app. The file path is `[app_name]/lib/main.dart`.
 
 The starter project is essentially an app that you can increment the number on the center.
 
 <img src="./starter_app.png" height=300>
 
+### **1. Material.dart**
 ```dart
+// line 1
 import 'package:flutter/material.dart';
 ```
 `Material.dart` is the library for Material Design
@@ -18,31 +24,45 @@ import 'package:flutter/material.dart';
 - `cupertino.dart` if you are interested in native iOS component
 
 
-### **Widgets**: UI components
+### **2. Widgets**
 
-- `Widget`: define what the UI looks like
-- `Widget Tree`: Think about the entire UI as a tree structure, where each node is a widget
+- `Widget`: UI component that defines what the UI looks like. It could be an AppBar, a button, a textbox, etc
+- `Widget Tree`: Think about the entire UI as a tree structure, where each node is a widget. Below is the widget tree for our starter_app:
 
+```
+MyApp
+- MaterialApp (theme)
+  - MyHomePage
+    - Scaffold
+      - AppBar
+      - Center
+        - Column
+          - Text
+          - Text (theme.of(context))
+        - FloatingActionButton
+          - Icon
+  - Another page (theme.of(context))
+```
+
+### **3. runApp**
 ```dart
+// line 3
 void main() {
-  runApp(MyApp());
+  runApp(MyApp()); // start the app with `MyApp` being the root of the widget tree
 }
 ```
-- `runApp`: start the app with `MyApp` being the root of the widget tree
 
+### **4. MyApp class**
 ```dart
+// line 5
 class MyApp extends StatelessWidget {
-  final int a;
-  MyApp(int aa) {
-    this.a = aa;
-  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
 ```
-- `StatelessWidget`: does not require mutable states
+- `StatelessWidget`: cannot have mutable states
   - `state`: logic or internal of the app (e.g. value of its member variables)
   - All variables should in theory be marked as `final`
     - why? because `final` enforces variables to be only assigned once, so it follows the definition of `stateless Widget`
@@ -52,31 +72,40 @@ class MyApp extends StatelessWidget {
 - `MaterialApp`: Material design of the app
   - `CupertinoApp` to create iOS like style
 - `MaterialApp` is the child of `MyApp`
----
+
+### **5. MyHomePage class**
 ```dart
+// line 32
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
 ```
-- `StatefulWidget`: can have mutable state
-  - Uses method `setState` to modify state changes (try without `setState`)
-    ```dart
-    int _counter = 0;
+- `StatefulWidget`: opposite to StatelessWidget, it can have mutable state
 
-    void _incrementCounter() {
-      setState(() {
-        _counter++;
-      });
-    }
-    ```
+### **6. _MyHomePageState class**
+  ```dart
+    // line 50
+    class _MyHomePageState extends State<MyHomePage> {
+      int _counter = 0;
+
+      void _incrementCounter() {
+        setState(() { // this function modifies state changes of MyHomePage class
+          _counter++;
+        });
+      }
+  ```
+
 - Why does the function begin with `_`? `private variable`, `private method`
   - In flutter, there's no `private`, `protected` keywords
   - `private` is handles in library-level
-    - example
+    - example, it can be used int he same file, not in another file
   - Why do we have private functions/class
     - `Encapsulation`: data hiding, restrict access
 
+### **7. Scaffold**
+
 ```dart
+// line 82
 return Scaffold(
   appBar: AppBar(
     title: Text(widget.title),
@@ -115,46 +144,35 @@ return Scaffold(
   - `Stack`: stack UI together
 - `Theme.of(context)`: get theme information defined within the context
 
+### **8. FloatingActionButton**
 ```dart
+// line 119
 floatingActionButton: FloatingActionButton(
   onPressed: _incrementCounter,
   tooltip: 'Increment',
   child: Icon(Icons.add),
-), 
+),
 ```
 - `FloatingActionButton`
   - `onPressed`
   - `tooltip`
   - `child`
 
-`Widget Tree`
-```
-MyApp
-- MaterialApp (theme)
-  - MyHomePage
-    - Scaffold
-      - AppBar
-      - Center
-        - Column
-          - Text
-          - Text (theme.of(context))
-        - FloatingActionButton
-          - Icon
-  - Another page (theme.of(context))
-```
 
----
+### **9. Hot reload/restart**
 
-### **Hot reload/restart**
-
-There are two ways to hot reload
-- Save the file (command/ctrl + s)
-  - It is also recommended to enable auto save in VSCode
-    - Settings => 'Auto Save' => 'After delay'
-- Click the yellow bolt button
+Hot reload
+ - It updates the UI states
+- There are two ways to hot reload
+  1. Save the file (command/ctrl + s)
+     - It is also recommended to enable auto save in VSCode
+      - Settings => 'Auto Save' => 'After delay'
+  2. Click the yellow bolt button
 
 Restart
-- Click the green circular arrow
+- Will rebuild everything in the app. Use it when you changed the app structure, such as adding extra files
+- To restart, click the green circular arrow
+
 
 ---
 

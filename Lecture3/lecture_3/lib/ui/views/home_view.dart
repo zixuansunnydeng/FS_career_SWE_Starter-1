@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:lecture_3/core/model/restaurant.dart';
+import 'package:lecture_3/core/model/user.dart';
 import 'package:lecture_3/ui/views/subviews/res_card.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   static List<String> categories = ['American', 'French', 'Dessert', 'Bar'];
@@ -16,7 +17,6 @@ class HomeView extends StatefulWidget {
     'Cocktails.png'
   ];
   static List<Restaurant> resList = [];
-
   @override
   _HomeViewState createState() => _HomeViewState();
 }
@@ -33,12 +33,17 @@ class _HomeViewState extends State<HomeView> {
 
   Future<void> loadRestaurant() async {
     // Use your own server api, make a GET request on /getRes
-    var endpoint = 'http://34.229.189.142/getRes';
+    var endpoint = 'http://52.91.147.61/getRes';
     Response response = await get(endpoint);
     for (var jsonRes in json.decode(response.body)) {
-      print(jsonRes);
-      var res = Restaurant(jsonRes['name'], jsonRes['price'], jsonRes['categories'][0]['alias'],
-          jsonRes['categories'][0]['title'], jsonRes['rating'], jsonRes['image_url']);
+      var res = Restaurant(
+          jsonRes['resName'],
+          jsonRes['priceRange'],
+          jsonRes['category1'],
+          jsonRes['category2'],
+          jsonRes['rating'],
+          jsonRes['image_url'],
+          jsonRes['address']);
       HomeView.resList.add(res);
     }
   }
@@ -54,10 +59,17 @@ class _HomeViewState extends State<HomeView> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(
-                    'Good morning, Annie',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
+                  Provider.of<User>(context, listen: false).useremail == null
+                      ? Text(
+                          'Good morning!',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        )
+                      : Text(
+                          'Good morning, ${Provider.of<User>(context, listen: false).name}!',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
                   Expanded(child: SizedBox()),
                   CircleAvatar(
                     child: Image.asset('assets/Profile.png'),
