@@ -169,6 +169,9 @@ class _DetailsViewState extends State<DetailsView> {
                             Provider.of<User>(context, listen: false)
                                 .reservations
                                 .add(widget.res.resName);
+                            Provider.of<User>(context, listen: false)
+                                .bookingsImages
+                                .add(widget.res.resImage);
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {

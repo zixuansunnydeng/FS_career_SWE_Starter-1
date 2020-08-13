@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<User>(
-      create: (_) => User(null, null, []),
+      create: (_) => User(null, null, [], []),
       child: MaterialApp(
         theme: ThemeData(
             textTheme: GoogleFonts.montserratTextTheme(

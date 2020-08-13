@@ -69,7 +69,11 @@ class _BookingsViewState extends State<BookingsView> {
                           Provider.of<User>(context, listen: false).name =
                               userData['name'];
                           Provider.of<User>(context, listen: false)
-                              .reservations = List<String>.from(userData['reservations']);
+                                  .reservations =
+                              List<String>.from(userData['reservations']);
+                          Provider.of<User>(context, listen: false)
+                                  .bookingsImages =
+                              List<String>.from(response['resImages']);
                           setState(() {
                             loggedin = true;
                           });
@@ -107,16 +111,63 @@ class _BookingsViewState extends State<BookingsView> {
   }
 }
 
-class BookingsColumn extends StatelessWidget {
+class BookingsColumn extends StatefulWidget {
+  @override
+  _BookingsColumnState createState() => _BookingsColumnState();
+}
+
+class _BookingsColumnState extends State<BookingsColumn> {
   @override
   Widget build(BuildContext context) {
+    // list of restaurant names
+    // 1. Api loadRestaurantData(resName) => Restaurant data
+    // 2.
     var bookings = Provider.of<User>(context, listen: false).reservations;
+    var bookingsImages =
+        Provider.of<User>(context, listen: false).bookingsImages;
     return ListView.builder(
       itemCount: bookings.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text(bookings[index]),
-        );
+            leading: CircleAvatar(
+                backgroundImage: NetworkImage(bookingsImages[index]),
+                backgroundColor: Colors.black),
+            title: Text(bookings[index]),
+            subtitle: Row(
+              children: [
+                Icon(Icons.person, size: 15),
+                Text(' 2, 4:30 PM Today'),
+              ],
+            ),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title:
+                          Text('Are you sure you want to cancel this booking?'),
+                      actions: [
+                        FlatButton(
+                          onPressed: () {
+                            setState(() {
+                              Provider.of<User>(context, listen: false)
+                                  .reservations
+                                  .remove(bookings[index]);
+                            });
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Yes, cancel'),
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("No"),
+                        )
+                      ],
+                    );
+                  });
+            });
       },
     );
   }
