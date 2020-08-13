@@ -154,6 +154,9 @@ class _BookingsColumnState extends State<BookingsColumn> {
                                   .reservations
                                   .remove(bookings[index]);
                             });
+                            // TODO: clear bookings inside database
+                            // Create a new API in the backend
+                            // and call that API
                             Navigator.of(context).pop();
                           },
                           child: Text('Yes, cancel'),
